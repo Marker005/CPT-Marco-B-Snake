@@ -6,31 +6,45 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
 blue = (0, 0, 255)
- 
+yellow = (255, 255, 102)
+green = (0, 255, 0)
+
+
+
 dis_width = 800
 dis_height = 600
+
 dis = pygame.display.set_mode((dis_width, dis_width))
-pygame.display.set_caption('Snake Game by Edureka')
+pygame.display.set_caption('Two Player Snake Game')
  
- 
+clock = pygame.time.Clock()
 
 snake_block1 = 10
 snake_block2 = 10
 
 snake_speed = 20
 
-clock = pygame.time.Clock()
 
 
 font_style = pygame.font.SysFont(None, 30)
+score_font = pygame.font.SysFont(None, 30)
 
-def message(msg,color):
+def snake1(snake_block1, snake_list1):
+    for x in snake_list1:
+        pygame.draw.rect(dis, blue, [x[0], x[1], snake_block1, snake_block1])
+
+def snake2(snake_block2, snake_list2):
+    for x in snake_list2:
+        pygame.draw.rect(dis, red, [x[0], x[1], snake_block2, snake_block2])
+
+def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width/3, dis_height/3])
     
 def gameLoop():
     game_over = False
     game_close = False
+    
     x1 = dis_width / 2
     y1 = dis_height / 2
     x2 = dis_width / 2 +100
@@ -40,6 +54,12 @@ def gameLoop():
     x2_change = 0
     y1_change = 0
     y2_change = 0
+    
+    snake_List1 = []
+    snake_List2 = []
+    
+    length1 = 1
+    length2 = 1
     
     foodx = round(random.randrange(0, dis_width - snake_block1) / 10.0) * 10.0
     foody = round(random.randrange(0, dis_width - snake_block1) / 10.0) * 10.0
@@ -101,15 +121,43 @@ def gameLoop():
         y1 += y1_change
     
         dis.fill(black)
-        pygame.draw.rect(dis, blue, [foodx, foody, snake_block1, snake_block2])
-        pygame.draw.rect(dis, white, [x1, y1, snake_block1, snake_block1])
-        pygame.draw.rect(dis, red, [x2, y2, snake_block2, snake_block2])
+        pygame.draw.rect(dis, green, [foodx, foody, snake_block1, snake_block2])
+        snake_Head1 = []
+        snake_Head1.append(x1)
+        snake_Head1.append(y1)
+        snake_List1.append(snake_Head1)
+        
+        snake_Head2 = []
+        snake_Head2.append(x2)
+        snake_Head2.append(y2)
+        snake_List2.append(snake_Head2)
+        
+        if len(snake_List1) > length1:
+            del snake_List1[0]
+        elif len(snake_List2) > length2:
+            del snake_List2[0]
+            '''
+        for x in snake_List1[:-1]:
+            if x == snake_Head1:
+                game_close = True
+        for x in snake_List2[:-1]:
+            if x == snake_Head2:
+                game_close = True
+                '''
+        snake1(snake_block1, snake_List1)
+        snake2(snake_block2, snake_List2)
+        
         pygame.display.update()
         
         if x1 == foodx and y1 == foody:
-            print("yummy1")
+            foodx = round(random.randrange(0, dis_width - snake_block1) / 10.0) * 10.0
+            foody = round(random.randrange(0, dis_height - snake_block1) / 10.0) * 10.0
+            length1 += 1
         elif x2 == foodx and y2 == foody:
-            print("yummy2")
+            foodx = round(random.randrange(0, dis_width - snake_block2) / 10.0) * 10.0
+            foody = round(random.randrange(0, dis_height - snake_block2) / 10.0) * 10.0
+            length2 += 1
+            
         clock.tick(snake_speed)
 
 
