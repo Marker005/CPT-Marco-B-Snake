@@ -1,3 +1,7 @@
+'''
+https://www.edureka.co/blog/snake-game-with-pygame/#createthesnake
+'''
+
 import pygame
 import random
 pygame.init()
@@ -12,7 +16,7 @@ green = (0, 255, 0)
 
 
 dis_width = 800
-dis_height = 700
+dis_height = 800
 
 dis = pygame.display.set_mode((dis_width, dis_width))
 pygame.display.set_caption('Two Player Snake Game')
@@ -47,7 +51,7 @@ def snake2(snake_block2, snake_list2):
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width/3, dis_height/3])
+    dis.blit(mesg, [dis_width/3 -200, dis_height/3]) 
     
 def gameLoop():
     game_over = False
@@ -76,12 +80,22 @@ def gameLoop():
         
         while game_close == True:
             dis.fill(black)
-            if length1 > length2:
-                message("Blue Wins, press Q to quit or press R to play again", white)
-            elif length1 == length2:
-                message("Its a tie, press Q to quit or press R to play again", white)
-            else:
-                message("Red Wins, press Q to quit or press R to play again", white)
+            if length1 > length2 and (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0):
+                message("Blue Had More Length but died, press Q to quit or press R to play again", white)
+            elif length2 > length1 and (x2 >= dis_width or x2 < 0 or y2 >= dis_height or y2 < 0):
+                message("Red Had More Length but died, press Q to quit or press R to play again", white)
+                
+            elif length1 == length2 and (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0): 
+                message("Its a tie but Blue died, press Q to quit or press R to play again", white)
+            elif length1 == length2 and (x2 >= dis_width or x2 < 0 or y2 >= dis_height or y2 < 0):
+                message("Its a tie but Red died, press Q to quit or press R to play again", white)    
+                
+            elif length1 > length2:
+                message("Blue wins, press Q to quit or press R to play again", white)
+            elif length2 > length1:
+                message("Red wins, press Q to quit or press R to play again", white)
+            
+                
             score1(length1 -1)
             score2(length2 -1)
             pygame.display.update()
@@ -123,9 +137,10 @@ def gameLoop():
                 elif event.key == pygame.K_s:
                     y2_change = snake_block2
                     x2_change = 0
-                
+        
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
+            
         elif x2 >= dis_width or x2 < 0 or y2 >= dis_height or y2 < 0:
             game_close = True
         
@@ -153,14 +168,21 @@ def gameLoop():
         if len(snake_List2) > length2:
             del snake_List2[0]
             
-            '''
+            
         for x in snake_List1[:-1]:
+            if x == snake_Head2:
+                game_close = True              
+        for x in snake_List2[:-1]:
             if x == snake_Head1:
                 game_close = True
+        '''      
         for x in snake_List2[:-1]:
             if x == snake_Head2:
                 game_close = True
-          '''    
+        for x in snake_List1[:-1]:
+            if x == snake_Head1:
+                game_close = True
+        '''      
         snake1(snake_block1, snake_List1)
         score1(length1 -1)
         snake2(snake_block2, snake_List2)
@@ -171,11 +193,11 @@ def gameLoop():
         if x1 == foodx and y1 == foody:
             foodx = round(random.randrange(0, dis_width - snake_block1) / 10.0) * 10.0
             foody = round(random.randrange(0, dis_height - snake_block1) / 10.0) * 10.0
-            length1 += 1
+            length1 += 5
         elif x2 == foodx and y2 == foody:
             foodx = round(random.randrange(0, dis_width - snake_block2) / 10.0) * 10.0
             foody = round(random.randrange(0, dis_height - snake_block2) / 10.0) * 10.0
-            length2 += 1
+            length2 += 5
             
         clock.tick(snake_speed)
 
@@ -184,9 +206,4 @@ def gameLoop():
     quit()
     
 gameLoop()
-'''
-if length_of_snake >= 100:
-    snake_speed = 40
-elif length_of_snake <= 200:
-    snake_speed = 20
-'''
+
