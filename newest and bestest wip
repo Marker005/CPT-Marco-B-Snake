@@ -12,7 +12,7 @@ green = (0, 255, 0)
 
 
 dis_width = 800
-dis_height = 800
+dis_height = 700
 
 dis = pygame.display.set_mode((dis_width, dis_width))
 pygame.display.set_caption('Two Player Snake Game')
@@ -149,7 +149,8 @@ def gameLoop():
         
         if len(snake_List1) > length1:
             del snake_List1[0]
-        elif len(snake_List2) > length2:
+            
+        if len(snake_List2) > length2:
             del snake_List2[0]
             
             '''
@@ -184,9 +185,8 @@ def gameLoop():
     
 gameLoop()
 '''
-if length_of_snake >= 100;
+if length_of_snake >= 100:
     snake_speed = 40
-elif length_of_snake <= 200
+elif length_of_snake <= 200:
     snake_speed = 20
-    
 '''
