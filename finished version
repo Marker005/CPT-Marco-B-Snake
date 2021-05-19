@@ -76,23 +76,25 @@ def gameLoop():
     
     def death():
         if length1 > length2 and (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0):
-            text("Blue Had More Length but died", white, 200, 200)
-            text("press Q to quit or press R to play again", white, 200, 0)
-        elif length2 > length1 and (x2 >= dis_width or x2 < 0 or y2 >= dis_height or y2 < 0):
-            text("Red Had More Length but died", white, 200, 0 )
-            text("press Q to quit or press R to play again", white, 200, 0)
+            text("Blue Had More Length but died", white, 300, 200)
+            text("press Q to quit or press R to play again", white, 200, 300)
+        elif length2 > length1 and (x2 >= dis_width or x2 < 200 or y2 >= dis_height or y2 < 0):
+            text("Red Had More Length but died", white, 300, 200 )
+            text("press Q to quit or press R to play again", white, 200, 300)
                 
         elif length1 == length2 and (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0): 
-            text("Its a tie but Blue died", white, 60, 200)
-            text("press Q to quit or press R to play again", white, 200, 0)
+            text("Its a tie but Blue died", white, 300, 200)
+            text("press Q to quit or press R to play again", white, 200, 300)
         elif length1 == length2 and (x2 >= dis_width or x2 < 0 or y2 >= dis_height or y2 < 0):
-            text("Its a tie but Red died", white, 60, 200)
-            text("press Q to quit or press R to play again", white, 60, 0)
+            text("Its a tie but Red died", white, 300, 200)
+            text("press Q to quit or press R to play again", white, 200, 300)
                 
         elif length1 > length2:
-            text("Blue wins, press Q to quit or press R to play again", white, 60, 200)
+            text("Blue wins", white, 300, 200)
+            text("press Q to quit or press R to play again", white, 200, 300)
         elif length2 > length1:
-            text("Red wins, press Q to quit or press R to play again", white, 60, 200)
+            text("Red wins", white, 300, 200)
+            text("press Q to quit or press R to play again", white, 200, 300)
         
 
     foodx = round(random.randrange(0, dis_width - snake_block1) / 10.0) * 10.0
